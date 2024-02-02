@@ -1,9 +1,13 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import fjwt from "@fastify/jwt";
 
+import { env } from "../utils/env";
+
 import userRoutes from "../modules/user/user.route";
 import { userSchemas } from "../modules/user/user.schema";
-import { env } from "../utils/env";
+
+import bookRoutes from "../modules/book/book.route";
+import { bookSchemas } from "../modules/book/book.schema";
 
 export const server = fastify();
 
@@ -28,7 +32,12 @@ async function main() {
     server.addSchema(schema);
   }
 
+  for (const schema of bookSchemas) {
+    server.addSchema(schema);
+  }
+
   server.register(userRoutes, { prefix: "/users" });
+  server.register(bookRoutes, { prefix: "/books" });
 
   try {
     await server.listen({ port: 3333, host: "0.0.0.0" });

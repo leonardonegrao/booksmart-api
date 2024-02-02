@@ -1,0 +1,10 @@
+- [x] Create books table
+- [] Create books routes
+  - [] Books routes should check for user's token in the header
+  - [] Find book from user
+  - [] List books from user
+  - [x] Create book by user - Should use R2
+    - [x] Should only accept .epub format
+    - [x] Should be save using the pattern of [userId]/[bookId].epub
+- [] Create pivot table Book <-> User
+  - [] Should store User's progression, notes, markings, etc
