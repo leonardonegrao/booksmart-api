@@ -37,5 +37,11 @@ export async function loginHandler(request: FastifyRequest<{ Body: LoginInput }>
 
   const { email, fullname, username, id } = user;
 
-  return { accessToken: server.jwt.sign({ email, fullname, username, id }) };
+  return {
+    accessToken: server.jwt.sign({ email, fullname, username, id }),
+    email,
+    fullname,
+    username,
+    id,
+  };
 }
