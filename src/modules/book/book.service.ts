@@ -38,3 +38,14 @@ export async function createBook(input: CreateBookInput) {
 
   return book;
 }
+
+export async function getBooks(input: { userId: string }) {
+  const { userId } = input;
+  const books = await prisma.book.findMany({
+    where: {
+      userId
+    }
+  });
+
+  return books;
+}

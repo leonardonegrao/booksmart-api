@@ -22,11 +22,15 @@ model User {
 }
 
 model Book {
-  id        String   @id @default(cuid())
-  filename  String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  url       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(cuid())
+  filename       String
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  url            String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  title          String
+  author         String
+  percentageRead Float
+  language       String
 }

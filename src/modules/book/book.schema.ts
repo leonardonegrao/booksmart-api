@@ -4,6 +4,10 @@ import { z } from "zod";
 const uploadBookSchema = z.object({
   name: z.string().min(3),
   userId: z.string(),
+  title: z.string(),
+  author: z.string(),
+  percentageRead: z.number().int().min(0).max(100),
+  language: z.string(),
 });
 
 const uploadBookResponseSchema = z.object({
@@ -14,6 +18,10 @@ const createBookSchema = z.object({
   name: z.string().min(3),
   userId: z.string(),
   signedUrl: z.string().url(),
+  title: z.string(),
+  author: z.string(),
+  percentageRead: z.number().int().min(0).max(100),
+  language: z.string(),
 });
 
 const createBookResponseSchema = z.object({
@@ -21,6 +29,10 @@ const createBookResponseSchema = z.object({
   filename: z.string(),
   userId: z.string(),
   url: z.string().url(),
+  title: z.string(),
+  author: z.string(),
+  percentageRead: z.number().int().min(0).max(100),
+  language: z.string(),
 });
 
 export type UploadBookInput = z.infer<typeof uploadBookSchema>;
