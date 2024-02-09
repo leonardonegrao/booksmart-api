@@ -26,7 +26,8 @@ model Book {
   filename       String
   userId         String
   user           User     @relation(fields: [userId], references: [id])
-  url            String
+  bookUrl        String
+  coverUrl       String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   title          String
