@@ -11,13 +11,15 @@ const uploadBookSchema = z.object({
 });
 
 const uploadBookResponseSchema = z.object({
-  signedUrl: z.string().url(),
+  bookSignedUrl: z.string().url(),
+  coverSignedUrl: z.string().url(),
 });
 
 const createBookSchema = z.object({
   name: z.string().min(3),
   userId: z.string(),
-  signedUrl: z.string().url(),
+  bookSignedUrl: z.string().url(),
+  coverSignedUrl: z.string().url(),
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
@@ -28,7 +30,8 @@ const createBookResponseSchema = z.object({
   id: z.string(),
   filename: z.string(),
   userId: z.string(),
-  url: z.string().url(),
+  bookUrl: z.string().url(),
+  coverUrl: z.string().url(),
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),

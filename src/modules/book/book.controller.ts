@@ -1,13 +1,18 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UploadBookInput } from "./book.schema";
-import { createBook, createSignedUrl, getBooks } from "./book.service";
+import { createBook, createSignedUrls, getBooks } from "./book.service";
 
 export async function uploadBookHandler(request: FastifyRequest<{ Body: UploadBookInput }>, reply: FastifyReply) {
   const body = request.body;
 
   try {
-    const signedUrl = await createSignedUrl(body);
-    const book = await createBook({ ...body, signedUrl });
+    const { bookSignedUrl, coverSignedUrl } = await createSignedUrls(body); // const bookFileSignedUrl
+    // const coverSignedUrl
+    const book = await createBook({
+      ...body,
+      bookSignedUrl,
+      coverSignedUrl,
+    });
 
     return reply.code(201).send(book);
   } catch (e) {
@@ -23,7 +28,7 @@ export async function getUserBooksHandler(request: FastifyRequest<{ Params: { us
   try {
     const books = await getBooks({ userId: request.params.userId });
 
-    return reply.send(books);
+    return reply.code(200).send(books);
   } catch (e) {
     console.error(e);
 
