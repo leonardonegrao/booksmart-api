@@ -28,8 +28,8 @@ export async function createSignedUrls(input: UploadBookInput) {
     r2,
     new PutObjectCommand({
       Bucket: env.R2_BUCKET,
-      Key: `${userId}/covers/${name}-${randomUUID()}.jpeg`,
-      ContentType: "image/jpeg",
+      Key: `${userId}/covers/${name}-${randomUUID()}.png`,
+      ContentType: "image/png",
     }),
     { expiresIn: 300 }
   );
