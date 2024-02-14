@@ -1,4 +1,4 @@
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { randomUUID } from "crypto";
 import prisma from "../../utils/prisma";
@@ -66,4 +66,17 @@ export async function getBooks(input: { userId: string }) {
   });
 
   return books;
+}
+
+export async function getBookCoverByKey(key: string) {
+  const cover = await getSignedUrl(
+    r2,
+    new GetObjectCommand({
+      Bucket: env.R2_BUCKET,
+      Key: key,
+    }),
+    { expiresIn: 300 }
+  );
+
+  return cover;
 }
