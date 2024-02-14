@@ -26,8 +26,8 @@ model Book {
   filename       String
   userId         String
   user           User     @relation(fields: [userId], references: [id])
-  bookUrl        String
-  coverUrl       String
+  bookBucketKey  String
+  coverBucketKey String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   title          String

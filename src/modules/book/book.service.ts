@@ -11,6 +11,7 @@ import { CreateBookInput, UploadBookInput } from "./book.schema";
 // Generate signed URLs for the book file and cover image
 export async function createSignedUrls(input: UploadBookInput) {
   const { userId, name } = input;
+  const bookBucketKey = `${userId}/books/${name}-${randomUUID()}.epub`;
   
   // TODO: verify userId
 
@@ -18,33 +19,38 @@ export async function createSignedUrls(input: UploadBookInput) {
     r2,
     new PutObjectCommand({
       Bucket: env.R2_BUCKET,
-      Key: `${userId}/books/${name}-${randomUUID()}.epub`,
+      Key: bookBucketKey,
       ContentType: "application/epub+zip",
     }),
     { expiresIn: 300 }
   );
 
+  const coverBucketKey = `${userId}/covers/${name}-${randomUUID()}.png`;
+
   const coverSignedUrl = await getSignedUrl(
     r2,
     new PutObjectCommand({
       Bucket: env.R2_BUCKET,
-      Key: `${userId}/covers/${name}-${randomUUID()}.png`,
+      Key: coverBucketKey,
       ContentType: "image/png",
     }),
     { expiresIn: 300 }
   );
 
-  return { bookSignedUrl, coverSignedUrl };
+  return {
+    bookSignedUrl,
+    bookBucketKey,
+    coverSignedUrl,
+    coverBucketKey,
+  };
 }
 
 export async function createBook(input: CreateBookInput) {
-  const { name: filename, bookSignedUrl: bookUrl, coverSignedUrl: coverUrl, ...rest } = input;
+  const { name: filename, ...rest } = input;
   const book = await prisma.book.create({
     data: {
       ...rest,
       filename,
-      bookUrl,
-      coverUrl
     }
   });
 

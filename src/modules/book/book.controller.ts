@@ -6,15 +6,20 @@ export async function uploadBookHandler(request: FastifyRequest<{ Body: UploadBo
   const body = request.body;
 
   try {
-    const { bookSignedUrl, coverSignedUrl } = await createSignedUrls(body); // const bookFileSignedUrl
-    // const coverSignedUrl
+    const {
+      bookSignedUrl,
+      bookBucketKey,
+      coverSignedUrl,
+      coverBucketKey,
+    } = await createSignedUrls(body); // const bookFileSignedUrl
+
     const book = await createBook({
       ...body,
-      bookSignedUrl,
-      coverSignedUrl,
+      bookBucketKey,
+      coverBucketKey,
     });
 
-    return reply.code(201).send(book);
+    return reply.code(201).send({ ...book, bookSignedUrl, coverSignedUrl });
   } catch (e) {
     console.error(e);
 
