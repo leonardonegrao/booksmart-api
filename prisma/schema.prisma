@@ -33,5 +33,6 @@ model Book {
   title          String
   author         String
   percentageRead Float
+  lastLocation   String
   language       String
 }

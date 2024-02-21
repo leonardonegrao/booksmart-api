@@ -67,3 +67,28 @@ export async function getBooks(input: { userId: string }) {
 
   return books;
 }
+
+export async function getBook(input: { id: string }) {
+  const { id } = input;
+  const book = await prisma.book.findUnique({
+    where: {
+      id
+    }
+  });
+
+  return book;
+}
+
+export async function updateBookProgress(input: { id: string, percentageRead: number, lastLocation: string }) {
+  const { id, ...rest } = input;
+  const book = await prisma.book.update({
+    where: {
+      id
+    },
+    data: {
+      ...rest
+    }
+  });
+
+  return book;
+}

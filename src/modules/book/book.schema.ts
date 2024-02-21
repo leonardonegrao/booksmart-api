@@ -7,6 +7,7 @@ const uploadBookSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
 });
 
@@ -25,6 +26,7 @@ const createBookSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
 });
 
@@ -39,17 +41,32 @@ const createBookResponseSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
+});
+
+const updateBookProgressSchema = z.object({
+  percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
+});
+
+const updateBookProgressResponseSchema = z.object({
+  id: z.string(),
+  percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
 });
 
 export type UploadBookInput = z.infer<typeof uploadBookSchema>;
 export type CreateBookInput = z.infer<typeof createBookSchema>;
+export type UpdateBookProgressInput = z.infer<typeof updateBookProgressSchema>;
 
 export const { schemas: bookSchemas, $ref } = buildJsonSchemas({
   uploadBookSchema,
   uploadBookResponseSchema,
   createBookSchema,
   createBookResponseSchema,
+  updateBookProgressSchema,
+  updateBookProgressResponseSchema,
 }, {
   $id: "book",
 });
