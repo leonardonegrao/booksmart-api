@@ -7,6 +7,7 @@ const uploadBookSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
 });
 
@@ -25,6 +26,7 @@ const createBookSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
 });
 
@@ -39,6 +41,7 @@ const createBookResponseSchema = z.object({
   title: z.string(),
   author: z.string(),
   percentageRead: z.number().int().min(0).max(100),
+  lastLocation: z.string(),
   language: z.string(),
 });
 
