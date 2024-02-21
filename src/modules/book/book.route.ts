@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { $ref } from "./book.schema";
-import { getUserBooksHandler, uploadBookHandler } from "./book.controller";
+import { getUserBooksHandler, updateBookProgressHandler, uploadBookHandler } from "./book.controller";
 
 async function bookRoutes(server: FastifyInstance) {
   server.post(
@@ -19,6 +19,19 @@ async function bookRoutes(server: FastifyInstance) {
   server.get(
     "/:userId",
     getUserBooksHandler
+  );
+
+  server.patch(
+    "/:bookId",
+    {
+      schema: {
+        body: $ref("updateBookProgressSchema"),
+        response: {
+          200: $ref("updateBookProgressResponseSchema"),
+        }
+      }
+    },
+    updateBookProgressHandler
   );
 }
 

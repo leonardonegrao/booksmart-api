@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { UploadBookInput } from "./book.schema";
-import { createBook, createSignedUrls, getBooks } from "./book.service";
+import { UpdateBookProgressInput, UploadBookInput } from "./book.schema";
+import { createBook, createSignedUrls, getBooks, updateBookProgress } from "./book.service";
 
 export async function uploadBookHandler(request: FastifyRequest<{ Body: UploadBookInput }>, reply: FastifyReply) {
   const body = request.body;
@@ -39,5 +39,25 @@ export async function getUserBooksHandler(request: FastifyRequest<{ Params: { us
 
     // TODO: Validate error and return appropriate response (invalid userId, invalid data)
     return reply.code(500).send({ error: "Error getting user books" });
+  }
+}
+
+export async function updateBookProgressHandler(
+  request: FastifyRequest<{ Params: { bookId: string }, Body: UpdateBookProgressInput }>,
+  reply: FastifyReply,
+) {
+  const body = request.body;
+  const bookId = request.params.bookId;
+
+  try {
+    const book = await updateBookProgress({
+      id: bookId,
+      percentageRead: body.percentageRead,
+      lastLocation: body.lastLocation
+    });
+
+    return reply.code(200).send(book);
+  } catch (e) {
+    console.error(e);
   }
 }
