@@ -2,6 +2,7 @@ import { buildJsonSchemas } from "fastify-zod";
 import { z } from "zod";
 
 const uploadBookSchema = z.object({
+  id: z.string(),
   name: z.string().min(3),
   userId: z.string(),
   title: z.string(),
@@ -19,6 +20,7 @@ const uploadBookResponseSchema = z.object({
 });
 
 const createBookSchema = z.object({
+  id: z.string(),
   name: z.string().min(3),
   userId: z.string(),
   bookBucketKey: z.string(),
@@ -32,6 +34,7 @@ const createBookSchema = z.object({
 
 const createBookResponseSchema = z.object({
   id: z.string(),
+  clientId: z.string(),
   filename: z.string(),
   userId: z.string(),
   bookSignedUrl: z.string().url(),
