@@ -46,10 +46,11 @@ export async function createSignedUrls(input: UploadBookInput) {
 }
 
 export async function createBook(input: CreateBookInput) {
-  const { name: filename, ...rest } = input;
+  const { name: filename, id: clientId, ...rest } = input;
   const book = await prisma.book.create({
     data: {
       ...rest,
+      clientId,
       filename,
     }
   });

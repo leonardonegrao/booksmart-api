@@ -11,7 +11,7 @@ export async function uploadBookHandler(request: FastifyRequest<{ Body: UploadBo
       bookBucketKey,
       coverSignedUrl,
       coverBucketKey,
-    } = await createSignedUrls(body); // const bookFileSignedUrl
+    } = await createSignedUrls(body);
 
     const book = await createBook({
       ...body,
